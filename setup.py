@@ -5,14 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pydantic-fetch",
-    version="0.0.2",
+    version="0.0.3",
     author="ed",
     author_email="ed@bayis.co.uk",
     description="Extension of pydantic models for HTTP send/recieve",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/bayinfosys/pydantic-fetch",
-    packages=["pydantic-fetch"],
+    packages=["pydantic_fetch"],
     package_data={},
     classifiers=[
         "Programming Language :: Python :: 3",

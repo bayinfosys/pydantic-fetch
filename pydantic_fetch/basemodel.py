@@ -112,6 +112,7 @@ class BaseModel(PydanticBaseModel):
       cls,
       uri: str,
       httpx_client=None,
+      headers: dict=None,
       container_key: str="items",
       ensure: ModelCheckFlag=ModelCheckFlag.none
     ):
@@ -119,6 +120,7 @@ class BaseModel(PydanticBaseModel):
 
        uri: httpx endpoint, str or iterable of string (if iterable, os.path.join'd)
        httpx_client: httpx client session to use, if None a new is created
+       headers: dict of HTTP headers to pass through to the call (will be added to httpx_client if present)
        container_key: if response is a list of dict, check in this key at the root for items
        ensure: qualities to ensure about the return value
 
@@ -132,9 +134,9 @@ class BaseModel(PydanticBaseModel):
     try:
       if httpx_client is None:
         async with httpx.AsyncClient() as hx:
-          resp = await hx.get(uri)
+          resp = await hx.get(uri, headers=headers)
       else:
-        resp = await httpx_client.get(uri)
+        resp = await httpx_client.get(uri, headers=headers)
       resp.raise_for_status()
     except httpx.RequestError as e:
       logger.error("connection failed: '%s' [%s]", uri, str(e))
